@@ -73,7 +73,7 @@ notebook==6.5.2
 notebook-shim==0.2.2
 numpy==1.23.4
 oauthlib==3.2.2
-opencv-python==4.6.0.66
+#opencv-python==4.6.0.66
 opencv-python-headless==4.6.0.66
 #openssl==1.1.1s
 packaging==21.3
