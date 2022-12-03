@@ -10,7 +10,7 @@ import time
 usrc.create()
 @st.cache
 def model():
-    return torch.hub.load('ultralytics/yolov5', 'custom', path="yolov5\\runs\\train\\exp6\\weights\\best.pt",force_reload=True) 
+    return torch.hub.load('ultralytics/yolov5', 'custom', path="best.pt",force_reload=True) 
 
 model=model()
 class VideoProcessor:
