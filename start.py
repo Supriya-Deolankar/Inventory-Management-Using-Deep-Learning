@@ -6,7 +6,6 @@ from PIL import Image
 import torch
 import numpy as np
 import time
-import openpyxl
 
 usrc.create()
 @st.cache
