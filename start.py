@@ -6,6 +6,7 @@ from PIL import Image
 import torch
 import numpy as np
 import time
+import openpyxl
 
 usrc.create()
 @st.cache
@@ -41,44 +42,26 @@ class VideoProcessor:
 
 st.title("Cold Drinks Inventory Management System")
 
-modes=['None','Staff','Admin']
-option=st.selectbox('Mode',modes)
+with st.container():
+    views=['📊data','🖼️image','📹video']
+    view_mode=st.selectbox(options=views,label='None')
+    if view_mode=='📊data':
+        st.title('📊data')
 
-if option=='Staff':
-    st.title('Staff')
+        table=usrc.read()
+        st.table(table)
+        count=usrc.count_drinks()
+        st.table(count)
 
-    with st.sidebar:
-        date = st.date_input('Date')
+        if(st.download_button(label='download csv',data=table.to_csv(),mime='text/csv')):
+            st.write('Data is written successfully to csv File.')
 
-        confidence=st.slider('Confidence threshold',0.00,1.00,0.8)
-
-        vmodes=['📹video','📊data','🖼️image']
-        view_mode=st.radio('View Mode',vmodes)
-
-        if view_mode=='📊data':
-            dmodes=['None','Excel','CSV']
-            download_mode=st.radio('Download Mode',dmodes)
-
-    with st.container():
-        if view_mode=='📊data':
-            st.title('📊data')
-
-            table=usrc.read()
-            st.table(table)
-            count=usrc.count_drinks()
-            st.table(count)
-
-            if download_mode=='CSV':
-                usrc.csvformat(table)
-                st.write('Data is written successfully to CSV File.')
-
-            if download_mode=='Exel':
-                usrc.excelformat(table)
-                st.write('Data is written successfully to Excel File.')
-
-        if view_mode=='🖼️image':
+    if view_mode=='🖼️image':
             st.title("🖼️ Object detection image")
             image=st.file_uploader('Image',type=['png','jpg','jpeg'])
+            with st.sidebar:
+                date = st.date_input('Date')
+                confidence=st.slider('Confidence threshold',0.00,1.00,0.8)
             if image:
                 model.conf=confidence
                 img = np.array(Image.open(image))
@@ -97,8 +80,12 @@ if option=='Staff':
                         usrc.insert(date,row,int(count[row]))
     
 
-        if view_mode=='📹video':
+    if view_mode=='📹video':
             st.title('📹Object detection video')
+
+            with st.sidebar:
+                date = st.date_input('Date')
+                confidence=st.slider('Confidence threshold',0.00,1.00,0.8)
 
             RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
             
@@ -112,24 +99,22 @@ if option=='Staff':
             )
             if webrtc_ctx.state.playing:
                     webrtc_ctx.video_processor.confidence=confidence
-            if st.checkbox('Show the detected labels'):
-                empty=st.empty()
-                store=st.button('Store')
-                if webrtc_ctx.state.playing:
-                    while True:
-                        if webrtc_ctx.video_processor:
-                            result = webrtc_ctx.video_processor.getRes()
-                            if result!= None:
-                                count = result.pandas().xyxy[0]['name'].value_counts()
-                                empty.write(count)
-                                for row in count.index:
-                                    if store:
-                                        usrc.insert(date,row,int(count[row]))
-                                        time.sleep(5)
-                            else:
-                                empty.write("No labels detected")  
-                        else:
-                            break
+            with st.sidebar:
+                    empty=st.empty()
+            store=st.button('Store')
+            if webrtc_ctx.state.playing:
+                while True:
+                    if webrtc_ctx.video_processor:
+                        result = webrtc_ctx.video_processor.getRes()
+                        if result!= None:
+                            count = result.pandas().xyxy[0]['name'].value_counts()
+                            empty.write(count)
+                            for row in count.index:
+                                if store:
+                                    usrc.insert(date,row,int(count[row]))
+                                    time.sleep(5)
+                    else:
+                        break
                         
                         
             
