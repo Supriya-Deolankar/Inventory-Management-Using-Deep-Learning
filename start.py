@@ -105,20 +105,21 @@ with st.container():
             with st.sidebar:
                     empty=st.empty()
             store=st.button('Store')
-            if webrtc_ctx.state.playing:
-                while True:
-                    if webrtc_ctx.video_processor:
-                        result = webrtc_ctx.video_processor.getRes()
-                        if result!= None:
-                            count = result.pandas().xyxy[0]['name'].value_counts()
-                            empty.write(count)
-                            for row in count.index:
-                                if store:
-                                    usrc.insert(date,row,int(count[row]))
-                                    st.success('Successfully stored!', icon="✅")
-                                    time.sleep(5)
-                    else:
-                        break
+            if(st.checkbox('Show detected labels'):
+                if webrtc_ctx.state.playing:
+                    while True:
+                        if webrtc_ctx.video_processor:
+                            result = webrtc_ctx.video_processor.getRes()
+                            if result!= None:
+                                count = result.pandas().xyxy[0]['name'].value_counts()
+                                empty.write(count)
+                                for row in count.index:
+                                    if store:
+                                        usrc.insert(date,row,int(count[row]))
+                                        st.success('Successfully stored!', icon="✅")
+                                        time.sleep(5)
+                        else:
+                            break
                         
                         
             
