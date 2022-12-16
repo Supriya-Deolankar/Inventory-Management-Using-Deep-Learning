@@ -6,10 +6,10 @@ conn=sqlite3.connect('data.db',check_same_thread=False)
 c=conn.cursor()
 
 def create():
-    c.execute('CREATE TABLE IF NOT EXISTS coldDrinks (time TEXT, name TEXT, count INTEGER)')
+    c.execute('CREATE TABLE IF NOT EXISTS coldDrinks (Date TEXT, Name TEXT, Count INTEGER)')
 
-def insert(time,name,count):
-    c.execute('INSERT INTO coldDrinks (time, name, count) VALUES (?, ?, ?)',(time, name, count))
+def insert(date,name,count):
+    c.execute('INSERT INTO coldDrinks (Date, Name, Count) VALUES (?, ?, ?)',(date, name, count))
     conn.commit()
 
 def read():
