@@ -83,8 +83,8 @@ with st.container():
                     st.success('Successfully stored!', icon="✅")
     
 
-    if view_mode=='📹video':
-            st.title('📹Object detection video')
+    if view_mode=='📹Video':
+            st.title('📹Cold Drinks detection video')
 
             with st.sidebar:
                 date = st.date_input('Date')
