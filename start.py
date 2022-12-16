@@ -74,7 +74,7 @@ with st.container():
                 bbox_img = np.array(results.render()[0])
                 st.image(bbox_img, caption=f"Processed image", use_column_width=True,)
                 
-                count = results.pandas().xyxy[0]['Name'].value_counts()
+                count = results.pandas().xyxy[0]['name'].value_counts()
                 with st.sidebar:
                     count
                 if(st.button('Store')):
@@ -110,7 +110,7 @@ with st.container():
                     if webrtc_ctx.video_processor:
                         result = webrtc_ctx.video_processor.getRes()
                         if result!= None:
-                            count = result.pandas().xyxy[0]['Name'].value_counts()
+                            count = result.pandas().xyxy[0]['name'].value_counts()
                             empty.write(count)
                             for row in count.index:
                                 if store:
