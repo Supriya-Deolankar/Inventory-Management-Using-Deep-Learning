@@ -21,7 +21,7 @@ def read():
     return data
 
 def count_drinks():
-    c.execute("SELECT Name, sum(Count) from coldDrinks GROUP BY name")
+    c.execute("SELECT Name, sum(Count) from coldDrinks GROUP BY Name")
     values=c.fetchall()
     data=pd.DataFrame(values,columns=["Name","Count"])
     return data
