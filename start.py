@@ -63,7 +63,7 @@ with st.container():
             image=st.file_uploader('Image',type=['png','jpg','jpeg'])
             with st.sidebar:
                 date = st.date_input('Date')
-                confidence=st.slider('Confidence threshold',0.00,1.00,0.8)
+                confidence=st.slider('Confidence threshold',0.00,1.00,0.5)
             if image:
                 model.conf=confidence
                 img = np.array(Image.open(image))
