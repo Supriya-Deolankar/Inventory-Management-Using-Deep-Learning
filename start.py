@@ -42,21 +42,24 @@ class VideoProcessor:
 st.title("Cold Drinks Inventory Management System")
 
 with st.container():
-    views=['📊data','🖼️image','📹video']
+    views=['📊Data','🖼️Image','📹Video']
     view_mode=st.selectbox(options=views,label='None')
-    if view_mode=='📊data':
-        st.title('📊data')
+    if view_mode=='📊Data':
+        st.title('📊Data')
 
         table=usrc.read()
         st.table(table)
         count=usrc.count_drinks()
         st.table(count)
 
-        if(st.download_button(label='download csv',data=table.to_csv(),mime='text/csv')):
-            st.write('Data is written successfully to csv File.')
+        if(st.download_button(label='Download',data=table.to_csv(),mime='text/csv')):
+            st.write('Data is written successfully to CSV File.')
+            
+        if(st.button(label='Clear data')):
+            usrc.clear()
 
-    if view_mode=='🖼️image':
-            st.title("🖼️ Object detection image")
+    if view_mode=='🖼️Image':
+            st.title("🖼️ Cold Drinks Detection Image")
             image=st.file_uploader('Image',type=['png','jpg','jpeg'])
             with st.sidebar:
                 date = st.date_input('Date')
@@ -71,7 +74,7 @@ with st.container():
                 bbox_img = np.array(results.render()[0])
                 st.image(bbox_img, caption=f"Processed image", use_column_width=True,)
                 
-                count = results.pandas().xyxy[0]['name'].value_counts()
+                count = results.pandas().xyxy[0]['Name'].value_counts()
                 with st.sidebar:
                     count
                 if(st.button('Store')):
@@ -85,7 +88,7 @@ with st.container():
 
             with st.sidebar:
                 date = st.date_input('Date')
-                confidence=st.slider('Confidence threshold',0.00,1.00,0.8)
+                confidence=st.slider('Confidence threshold',0.00,1.00,0.5)
 
             RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
             
@@ -107,7 +110,7 @@ with st.container():
                     if webrtc_ctx.video_processor:
                         result = webrtc_ctx.video_processor.getRes()
                         if result!= None:
-                            count = result.pandas().xyxy[0]['name'].value_counts()
+                            count = result.pandas().xyxy[0]['Name'].value_counts()
                             empty.write(count)
                             for row in count.index:
                                 if store:
