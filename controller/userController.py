@@ -21,21 +21,7 @@ def read():
     return data
 
 def count_drinks():
-    c.execute("SELECT name, sum(count) from coldDrinks GROUP BY name")
+    c.execute("SELECT Name, sum(Count) from coldDrinks GROUP BY name")
     values=c.fetchall()
-    data=pd.DataFrame(values,columns=["name","count"])
+    data=pd.DataFrame(values,columns=["Name","Count"])
     return data
-
-def csvformat(data):
-    df = pd.DataFrame(data)
-    df.to_csv('coldDrinks.csv')
-
-def excelformat(data):
-    df = pd.DataFrame(data)
-    writer = pd.ExcelWriter('coldDrinks.xlsx')
-    df.to_excel(writer)
-    writer.save()
-
-
-
-
