@@ -25,3 +25,6 @@ def count_drinks():
     values=c.fetchall()
     data=pd.DataFrame(values,columns=["Name","Count"])
     return data
+
+def clear():
+    c.execute("DELETE FROM coldDrinks")
