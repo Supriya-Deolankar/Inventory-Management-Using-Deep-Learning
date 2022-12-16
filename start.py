@@ -105,7 +105,7 @@ with st.container():
             with st.sidebar:
                     empty=st.empty()
             store=st.button('Store')
-            if(st.checkbox('Show detected labels'):
+            if(st.checkbox('Show detected labels')):
                 if webrtc_ctx.state.playing:
                     while True:
                         if webrtc_ctx.video_processor:
