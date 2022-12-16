@@ -77,6 +77,7 @@ with st.container():
                 if(st.button('Store')):
                     for row in count.index:
                         usrc.insert(date,row,int(count[row]))
+                    st.success('Successfully stored!', icon="✅")
     
 
     if view_mode=='📹video':
@@ -111,6 +112,7 @@ with st.container():
                             for row in count.index:
                                 if store:
                                     usrc.insert(date,row,int(count[row]))
+                                    st.success('Successfully stored!', icon="✅")
                                     time.sleep(5)
                     else:
                         break
