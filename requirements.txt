@@ -146,6 +146,7 @@ typing_extensions==4.3.0
 tzdata==2022.6
 tzlocal==4.2
 urllib3==1.26.6
+ultralytics>=8.0.147
 validators==0.20.0
 #vc==14.2
 #vs2015_runtime==14.27.29016
