@@ -57,7 +57,7 @@ kiwisolver==1.4.4
 #libsodium==1.0.18
 #libxml2==2.9.14
 #libxslt==1.1.35
-libgl
+libgl1
 lxml==4.9.1
 markdown==3.4.1
 markupsafe==2.1.1
